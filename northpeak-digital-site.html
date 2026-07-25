@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NorthPeak Digital — E-commerce Sites Built for the Climb</title>
+<meta name="description" content="NorthPeak Digital designs and builds high-performance e-commerce websites for growing brands. Strategy, design, and build — surveyed and mapped before a single line of code.">
+<meta name="theme-color" content="#0F1B22">
+
+<!-- Preconnect only to what we actually load; system-first font stack avoids a webfont request entirely -->
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ink:#0F1B22;
+    --fog:#16242C;
+    --surface:#1C2C35;
+    --line: rgba(237,243,240,0.10);
+    --snow:#EDF3F0;
+    --mist:#8FA3AC;
+    --glacier:#6FE3C4;
+    --glacier-dim: rgba(111,227,196,0.14);
+    --signal:#FF6B35;
+    --signal-dim: rgba(255,107,53,0.16);
+    --radius: 14px;
+    --max: 1180px;
+    --font-display: "Space Grotesk", "Segoe UI", sans-serif;
+    --font-body: "Inter", "Segoe UI", sans-serif;
+    --font-mono: "IBM Plex Mono", "Courier New", monospace;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  body{
+    background:var(--ink);
+    color:var(--snow);
+    font-family:var(--font-body);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  img{max-width:100%; display:block;}
+  a{color:inherit;}
+
+  h1,h2,h3{font-family:var(--font-display); font-weight:600; line-height:1.1; letter-spacing:-0.01em;}
+
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 24px;}
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--glacier);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:6px; height:6px; border-radius:50%;
+    background:var(--glacier);
+    box-shadow:0 0 0 4px var(--glacier-dim);
+  }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
+    outline:2px solid var(--glacier);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  /* ---------- Skip link ---------- */
+  .skip-link{
+    position:absolute; left:-9999px; top:0;
+    background:var(--glacier); color:var(--ink);
+    padding:10px 16px; z-index:200; font-weight:600; border-radius:0 0 8px 0;
+  }
+  .skip-link:focus{left:0;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:100;
+    background:rgba(15,27,34,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex; align-items:center; justify-content:space-between; height:72px;}
+  .logo{
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--font-display); font-weight:700; font-size:1.05rem;
+    letter-spacing:-0.01em; text-decoration:none;
+  }
+  .logo svg{flex-shrink:0;}
+  .nav-links{display:flex; align-items:center; gap:32px; list-style:none;}
+  .nav-links a{
+    font-size:0.9rem; text-decoration:none; color:var(--mist);
+    transition:color .15s ease;
+  }
+  .nav-links a:hover{color:var(--snow);}
+  .nav-cta{
+    background:var(--glacier); color:var(--ink); font-weight:600;
+    padding:10px 20px; border-radius:999px; text-decoration:none; font-size:0.88rem;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .nav-cta:hover{transform:translateY(-1px); box-shadow:0 6px 20px rgba(111,227,196,0.25);}
+  .menu-toggle{
+    display:none; background:none; border:1px solid var(--line); border-radius:8px;
+    width:42px; height:42px; color:var(--snow); cursor:pointer;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative; overflow:hidden;
+    padding:96px 0 72px;
+    border-bottom:1px solid var(--line);
+  }
+  .contour-bg{
+    position:absolute; inset:0; z-index:0;
+    opacity:0.5;
+    pointer-events:none;
+  }
+  .hero-inner{position:relative; z-index:1; max-width:760px;}
+  .hero h1{
+    font-size:clamp(2.4rem, 5.2vw, 4.1rem);
+    margin:18px 0 22px;
+  }
+  .hero h1 .accent{color:var(--glacier);}
+  .hero p.lede{
+    font-size:clamp(1.02rem, 1.6vw, 1.2rem);
+    color:var(--mist);
+    max-width:560px;
+    margin-bottom:36px;
+  }
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:56px;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-weight:600; font-size:0.95rem;
+    padding:14px 26px; border-radius:999px;
+    text-decoration:none; cursor:pointer; border:none;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-primary{background:var(--signal); color:var(--ink);}
+  .btn-primary:hover{transform:translateY(-1px); box-shadow:0 8px 22px rgba(255,107,53,0.28);}
+  .btn-ghost{background:transparent; color:var(--snow); border:1px solid var(--line);}
+  .btn-ghost:hover{border-color:var(--glacier); color:var(--glacier);}
+
+  .hero-coords{
+    display:flex; gap:36px; flex-wrap:wrap;
+    font-family:var(--font-mono); font-size:0.78rem; color:var(--mist);
+    border-top:1px solid var(--line); padding-top:22px;
+  }
+  .hero-coords strong{display:block; color:var(--snow); font-size:1.4rem; font-family:var(--font-display); font-weight:600;}
+
+  /* ---------- Section shell ---------- */
+  section{padding:88px 0;}
+  .section-head{max-width:620px; margin-bottom:52px;}
+  .section-head h2{font-size:clamp(1.7rem, 3vw, 2.4rem); margin-top:14px;}
+  .section-head p{color:var(--mist); margin-top:14px; font-size:1.02rem;}
+
+  /* ---------- Services ---------- */
+  .services{background:var(--fog); border-bottom:1px solid var(--line);}
+  .services-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
+  }
+  .service-card{
+    background:var(--ink); padding:32px 28px; min-height:200px;
+    display:flex; flex-direction:column; gap:14px;
+  }
+  .service-card .num{font-family:var(--font-mono); font-size:0.75rem; color:var(--glacier);}
+  .service-card h3{font-size:1.08rem;}
+  .service-card p{color:var(--mist); font-size:0.92rem;}
+  .service-icon{width:34px; height:34px; color:var(--glacier);}
+
+  /* ---------- Elevation divider (signature element) ---------- */
+  .elevation-divider{
+    padding:64px 0 24px;
+    border-bottom:1px solid var(--line);
+  }
+  .elevation-label{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    font-family:var(--font-mono); font-size:0.72rem; color:var(--mist);
+    margin-bottom:12px; flex-wrap:wrap; gap:8px;
+  }
+  .elevation-label .peak{color:var(--signal);}
+  .elevation-svg{width:100%; height:auto; display:block;}
+
+  /* ---------- Results ---------- */
+  .results-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; margin-bottom:56px;
+  }
+  .stat-card{
+    border:1px solid var(--line); border-radius:var(--radius); padding:26px;
+  }
+  .stat-card .figure{
+    font-family:var(--font-mono); font-size:2.1rem; font-weight:500; color:var(--glacier);
+  }
+  .stat-card .label{color:var(--mist); font-size:0.88rem; margin-top:6px;}
+
+  .testimonial-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  .testimonial{
+    background:var(--fog); border:1px solid var(--line); border-radius:var(--radius);
+    padding:28px; display:flex; flex-direction:column; gap:18px;
+  }
+  .testimonial blockquote{font-size:0.98rem; color:var(--snow);}
+  .testimonial .who{font-family:var(--font-mono); font-size:0.78rem; color:var(--mist);}
+
+  /* ---------- Pricing ---------- */
+  .pricing{background:var(--fog); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .pricing-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; align-items:stretch;}
+  .plan{
+    background:var(--ink); border:1px solid var(--line); border-radius:var(--radius);
+    padding:32px 28px; display:flex; flex-direction:column;
+  }
+  .plan.featured{border-color:var(--glacier); box-shadow:0 0 0 1px var(--glacier), 0 20px 50px rgba(111,227,196,0.08);}
+  .plan .tier{font-family:var(--font-mono); font-size:0.75rem; color:var(--glacier); text-transform:uppercase; letter-spacing:0.1em;}
+  .plan .price{font-family:var(--font-display); font-size:2.2rem; margin:12px 0 4px;}
+  .plan .price span{font-size:0.95rem; color:var(--mist); font-family:var(--font-body); font-weight:400;}
+  .plan .pitch{color:var(--mist); font-size:0.9rem; margin-bottom:22px;}
+  .plan ul{list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:28px; flex:1;}
+  .plan li{display:flex; gap:10px; font-size:0.9rem; align-items:flex-start;}
+  .plan li svg{flex-shrink:0; margin-top:3px; color:var(--glacier); width:16px; height:16px;}
+  .plan .btn{width:100%; justify-content:center;}
+
+  /* ---------- Contact ---------- */
+  .contact-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; align-items:start;}
+  .contact-info .eyebrow{margin-bottom:14px;}
+  .contact-info h2{font-size:clamp(1.6rem,2.8vw,2.2rem); margin-bottom:16px;}
+  .contact-info p{color:var(--mist); margin-bottom:26px;}
+  .contact-detail{display:flex; gap:12px; align-items:flex-start; margin-bottom:18px; font-size:0.92rem;}
+  .contact-detail svg{color:var(--glacier); flex-shrink:0; margin-top:2px;}
+
+  form{display:flex; flex-direction:column; gap:18px;}
+  .field{display:flex; flex-direction:column; gap:6px;}
+  .field label{font-size:0.85rem; color:var(--mist); font-weight:500;}
+  .field input, .field select, .field textarea{
+    background:var(--surface); border:1px solid var(--line); border-radius:10px;
+    padding:13px 14px; color:var(--snow); font-family:var(--font-body); font-size:0.95rem;
+  }
+  .field input::placeholder, .field textarea::placeholder{color:#5C707A;}
+  .field textarea{resize:vertical; min-height:110px;}
+  .field.invalid input, .field.invalid select, .field.invalid textarea{border-color:var(--signal);}
+  .error-msg{font-size:0.8rem; color:var(--signal); min-height:1em; font-family:var(--font-mono);}
+  .form-status{
+    font-size:0.9rem; padding:14px 16px; border-radius:10px; display:none;
+    font-family:var(--font-mono);
+  }
+  .form-status.show{display:block;}
+  .form-status.success{background:var(--glacier-dim); color:var(--glacier); border:1px solid var(--glacier);}
+  .form-status.fail{background:var(--signal-dim); color:var(--signal); border:1px solid var(--signal);}
+
+  /* ---------- Footer ---------- */
+  footer{padding:48px 0 36px;}
+  .footer-top{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-bottom:28px; margin-bottom:28px; border-bottom:1px solid var(--line);
+    flex-wrap:wrap; gap:20px;
+  }
+  .footer-links{display:flex; gap:26px; list-style:none; flex-wrap:wrap;}
+  .footer-links a{font-size:0.88rem; color:var(--mist); text-decoration:none;}
+  .footer-links a:hover{color:var(--snow);}
+  .footer-bottom{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
+    font-size:0.8rem; color:var(--mist);
+  }
+  .credit-line a{color:var(--glacier); text-decoration:none; font-weight:500;}
+  .credit-line a:hover{text-decoration:underline;}
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease;}
+  .reveal.in{opacity:1; transform:none;}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px){
+    .services-grid{grid-template-columns:repeat(2,1fr);}
+    .results-grid, .testimonial-grid, .pricing-grid{grid-template-columns:1fr 1fr;}
+    .contact-grid{grid-template-columns:1fr; gap:40px;}
+  }
+  @media (max-width: 640px){
+    .nav-links{position:fixed; inset:72px 0 0 0; background:var(--ink); flex-direction:column;
+      align-items:flex-start; padding:28px 24px; gap:22px; border-top:1px solid var(--line);
+      transform:translateX(100%); transition:transform .25s ease;}
+    .nav-links.open{transform:translateX(0);}
+    .menu-toggle{display:flex; align-items:center; justify-content:center;}
+    .nav-cta{order:2;}
+    .services-grid, .results-grid, .testimonial-grid, .pricing-grid{grid-template-columns:1fr;}
+    section{padding:60px 0;}
+    .hero{padding:56px 0 48px;}
+    .hero-coords{gap:24px;}
+    .plan.featured{order:-1;}
+  }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<header>
+  <nav class="nav wrap">
+    <a href="#top" class="logo" aria-label="NorthPeak Digital home">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <path d="M2 22L10 8L14.5 15L18 10L26 22H2Z" stroke="#6FE3C4" stroke-width="2" stroke-linejoin="round"/>
+        <circle cx="18" cy="6" r="1.6" fill="#FF6B35"/>
+      </svg>
+      NorthPeak Digital
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#contact" class="nav-cta">Start a project</a></li>
+    </ul>
+    <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation menu">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M1 4H17M1 9H17M1 14H17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="top">
+    <svg class="contour-bg" viewBox="0 0 1180 520" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+      <g fill="none" stroke="#6FE3C4" stroke-width="1">
+        <path opacity="0.10" d="M600 40 C 750 60, 850 140, 900 260 C 950 380, 880 460, 760 480 C 640 500, 560 420, 580 320 C 600 220, 700 200, 760 250"/>
+        <path opacity="0.16" d="M640 70 C 780 90, 870 160, 910 270 C 950 380, 890 440, 780 460 C 660 480, 600 400, 610 320 C 620 240, 700 230, 750 270"/>
+        <path opacity="0.22" d="M680 100 C 800 120, 880 180, 915 275 C 950 370, 895 420, 800 435 C 700 450, 650 385, 655 320 C 660 255, 720 250, 755 280"/>
+        <path opacity="0.30" d="M715 130 C 815 150, 880 200, 910 275 C 940 350, 895 390, 815 400 C 735 410, 695 365, 700 315 C 705 265, 745 262, 770 285"/>
+      </g>
+    </svg>
+    <div class="wrap hero-inner">
+      <span class="eyebrow">Shopify &amp; commerce builds</span>
+      <h1>We map the terrain<br>before we <span class="accent">build the trail.</span></h1>
+      <p class="lede">NorthPeak Digital designs and ships e-commerce websites for brands ready to grow past their template. Strategy, design, and a build that survives launch day traffic — surveyed before a single line of code.</p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn btn-primary">Start a project</a>
+        <a href="#results" class="btn btn-ghost">See the results</a>
+      </div>
+      <div class="hero-coords">
+        <div><strong>38</strong>sites shipped since 2023</div>
+        <div><strong>4.2s → 0.9s</strong>average load time improvement</div>
+        <div><strong>2 wks</strong>typical build timeline</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICES ===== -->
+  <section class="services" id="services">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">What we do</span>
+        <h2>Six ways up the mountain</h2>
+        <p>Every build starts with the same question: what is this store actually trying to sell, and to whom. Everything below serves that.</p>
+      </div>
+      <div class="services-grid">
+
+        <div class="service-card reveal">
+          <span class="num">01</span>
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 17L9 9L13 14L21 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3>Store strategy</h3>
+          <p>Category structure, merchandising logic, and a conversion map before any design starts.</p>
+        </div>
+
+        <div class="service-card reveal">
+          <span class="num">02</span>
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3 9H21" stroke="currentColor" stroke-width="1.6"/></svg>
+          <h3>Theme design &amp; build</h3>
+          <p>Custom Shopify themes and sections, built for your catalog rather than bent to fit a template.</p>
+        </div>
+
+        <div class="service-card reveal">
+          <span class="num">03</span>
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7V12L15 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <h3>Performance tuning</h3>
+          <p>Image pipelines, script auditing, and Core Web Vitals work — the difference between browsing and bouncing.</p>
+        </div>
+
+        <div class="service-card reveal">
+          <span class="num">04</span>
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 4H20V16H4V4Z" stroke="currentColor" stroke-width="1.6"/><path d="M8 20H16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <h3>Mobile-first UX</h3>
+          <p>Most of your traffic is on a phone in one hand. We design for that hand first, desktop second.</p>
+        </div>
+
+        <div class="service-card reveal">
+          <span class="num">05</span>
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3V21M3 12H21" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/></svg>
+          <h3>App-free merchandising</h3>
+          <p>Trust badges, size guides, bundles — built natively into the theme instead of stacked as apps that slow you down.</p>
+        </div>
+
+        <div class="service-card reveal">
+          <span class="num">06</span>
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12L10 18L20 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3>Post-launch support</h3>
+          <p>Thirty days of fixes and tuning after go-live, then a maintenance retainer if you want to keep climbing.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ELEVATION DIVIDER (signature element) ===== -->
+  <div class="elevation-divider">
+    <div class="wrap">
+      <div class="elevation-label reveal">
+        <span>44.2°N — CLIENT GROWTH TRAJECTORY, INDEXED REVENUE, 12 MONTHS POST-LAUNCH</span>
+        <span class="peak">SUMMIT: +212%</span>
+      </div>
+      <svg class="elevation-svg reveal" viewBox="0 0 1180 140" preserveAspectRatio="none" role="img" aria-label="Line chart showing client revenue climbing steadily over twelve months after launch, reaching a peak of 212 percent growth">
+        <polyline points="0,120 90,112 180,100 270,104 360,86 450,90 540,68 630,72 720,50 810,54 900,32 990,36 1080,14 1180,10"
+          fill="none" stroke="#6FE3C4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="1180" cy="10" r="4" fill="#FF6B35"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ===== RESULTS ===== -->
+  <section id="results">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Track record</span>
+        <h2>Numbers from the last twelve builds</h2>
+      </div>
+
+      <div class="results-grid">
+        <div class="stat-card reveal">
+          <div class="figure">+38%</div>
+          <div class="label">average mobile conversion lift after redesign</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="figure">0.9s</div>
+          <div class="label">median Largest Contentful Paint across live builds</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="figure">96</div>
+          <div class="label">average Lighthouse performance score at handoff</div>
+        </div>
+      </div>
+
+      <div class="testimonial-grid">
+        <div class="testimonial reveal">
+          <blockquote>"They rebuilt our product pages and our mobile checkout completion jumped inside the first month. No app bloat, just a faster site."</blockquote>
+          <div class="who">— Founder, Coastal Supply Co.</div>
+        </div>
+        <div class="testimonial reveal">
+          <blockquote>"NorthPeak asked harder questions about our catalog than our last two agencies combined. The site that came out of it actually matched how we sell."</blockquote>
+          <div class="who">— Head of DTC, Marrow &amp; Oak</div>
+        </div>
+        <div class="testimonial reveal">
+          <blockquote>"Launch day traffic didn't break a single thing. That's the whole review."</blockquote>
+          <div class="who">— Ops Lead, Fieldstate Goods</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRICING ===== -->
+  <section class="pricing" id="pricing">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Investment</span>
+        <h2>Three ways to work with us</h2>
+        <p>Fixed-scope pricing for the build. Ongoing work is billed monthly, cancel anytime.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="plan reveal">
+          <span class="tier">Basecamp</span>
+          <div class="price">$3,200<span> one-time</span></div>
+          <p class="pitch">For a single-line brand launching its first real storefront.</p>
+          <ul>
+            <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L6.5 11.5L13 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Custom Shopify theme (up to 6 templates)</li>
+            <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L6.5 11.5L13 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Mobile-first responsive build</li>
+            <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L6.5 11.5L13 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>14-day post-launch support</li>
+          </ul>
+          <a href="#contact" class="btn btn-ghost">Start with Basecamp</a>
+        </div>
+
+        <div class="plan featured reveal">
+          <span class="tier">Ridge Line</span>
+          <div class="price">$6,800<span> one-time</span></div>
+          <p class="pitch">Our most-booked tier — for brands scaling past 500 SKUs.</p>
+          <ul>
+            <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L6.5 11.5L13 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Everything in Basecamp</li>
+            <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L6.5 11.5L13 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>2 custom Liquid sections, app-free merchandising</li>
+            <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L6.5 11.5L13 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Core Web Vitals tuning to 90+</li>
+            <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L6.5 11.5L13 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>30-day post-launch support</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary">Start with Ridge Line</a>
+        </div>
+
+        <div class="plan reveal">
+          <span class="tier">Summit</span>
+          <div class="price">$12,500<span>+ one-time</span></div>
+          <p class="pitch">Full replatform, multi-market builds, or complex catalogs.</p>
+          <ul>
+            <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L6.5 11.5L13 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Everything in Ridge Line</li>
+            <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L6.5 11.5L13 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Multi-currency &amp; multi-language setup</li>
+            <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L6.5 11.5L13 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Dedicated engineer, 60-day support</li>
+          </ul>
+          <a href="#contact" class="btn btn-ghost">Talk about Summit</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact">
+    <div class="wrap contact-grid">
+      <div class="contact-info reveal">
+        <span class="eyebrow">Get in touch</span>
+        <h2>Tell us what you're building</h2>
+        <p>Fill in the brief and we'll reply within one business day with next steps — usually a 20-minute call to confirm scope.</p>
+
+        <div class="contact-detail">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M2 4H16V14H2V4Z" stroke="currentColor" stroke-width="1.4"/><path d="M2 4L9 10L16 4" stroke="currentColor" stroke-width="1.4"/></svg>
+          hello@northpeakdigital.com
+        </div>
+        <div class="contact-detail">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M15 9C15 12.5 9 16 9 16C9 16 3 12.5 3 9C3 5.7 5.7 3 9 3C12.3 3 15 5.7 15 9Z" stroke="currentColor" stroke-width="1.4"/><circle cx="9" cy="9" r="2" stroke="currentColor" stroke-width="1.4"/></svg>
+          Remote-first, working US &amp; UK hours
+        </div>
+      </div>
+
+      <form id="contact-form" novalidate>
+        <div class="field" id="field-name">
+          <label for="name">Full name</label>
+          <input type="text" id="name" name="name" placeholder="Jamie Rivera" autocomplete="name">
+          <span class="error-msg" id="error-name" role="alert"></span>
+        </div>
+
+        <div class="field" id="field-email">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="jamie@yourstore.com" autocomplete="email">
+          <span class="error-msg" id="error-email" role="alert"></span>
+        </div>
+
+        <div class="field" id="field-budget">
+          <label for="budget">Budget range</label>
+          <select id="budget" name="budget">
+            <option value="">Select a range</option>
+            <option value="under-3k">Under $3,000</option>
+            <option value="3-7k">$3,000 – $7,000</option>
+            <option value="7-15k">$7,000 – $15,000</option>
+            <option value="15k-plus">$15,000+</option>
+          </select>
+          <span class="error-msg" id="error-budget" role="alert"></span>
+        </div>
+
+        <div class="field" id="field-message">
+          <label for="message">Tell us about the project</label>
+          <textarea id="message" name="message" placeholder="What you're selling, current platform, and rough timeline."></textarea>
+          <span class="error-msg" id="error-message" role="alert"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Send the brief</button>
+        <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <a href="#top" class="logo" aria-label="NorthPeak Digital home">
+        <svg width="24" height="24" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <path d="M2 22L10 8L14.5 15L18 10L26 22H2Z" stroke="#6FE3C4" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+        NorthPeak Digital
+      </a>
+      <ul class="footer-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 NorthPeak Digital. Fictional agency, built as a training exercise.</span>
+      <span class="credit-line">Built for <a href="https://digitalheroesco.com" target="_blank" rel="noopener">Digital Heroes Training Task</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* Mobile nav toggle */
+  var toggle = document.getElementById('menu-toggle');
+  var navLinks = document.getElementById('nav-links');
+  toggle.addEventListener('click', function(){
+    var isOpen = navLinks.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  navLinks.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click', function(){
+      navLinks.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  /* Scroll reveal — respects prefers-reduced-motion via CSS above */
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.12});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* Contact form validation — client-side only, no backend on this static build */
+  var form = document.getElementById('contact-form');
+  var status = document.getElementById('form-status');
+
+  function setError(fieldId, msg){
+    var field = document.getElementById('field-' + fieldId);
+    var err = document.getElementById('error-' + fieldId);
+    if (msg){
+      field.classList.add('invalid');
+      err.textContent = msg;
+    } else {
+      field.classList.remove('invalid');
+      err.textContent = '';
+    }
+  }
+
+  function validate(){
+    var valid = true;
+    var name = document.getElementById('name').value.trim();
+    var email = document.getElementById('email').value.trim();
+    var budget = document.getElementById('budget').value;
+    var message = document.getElementById('message').value.trim();
+
+    if (name.length < 2){
+      setError('name', 'Enter your full name.');
+      valid = false;
+    } else { setError('name', ''); }
+
+    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)){
+      setError('email', 'Enter a valid email address.');
+      valid = false;
+    } else { setError('email', ''); }
+
+    if (!budget){
+      setError('budget', 'Choose a budget range.');
+      valid = false;
+    } else { setError('budget', ''); }
+
+    if (message.length < 10){
+      setError('message', 'Tell us a little more — at least 10 characters.');
+      valid = false;
+    } else { setError('message', ''); }
+
+    return valid;
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    status.classList.remove('show', 'success', 'fail');
+
+    if (!validate()){
+      status.textContent = 'Please fix the highlighted fields above.';
+      status.classList.add('show', 'fail');
+      return;
+    }
+
+    // No backend on this static build — this is where a fetch() to a form
+    // endpoint (Netlify Forms, Formspree, or a small serverless function)
+    // would go for real server-side validation and storage.
+    status.textContent = 'Thanks — your brief is in. We reply within one business day.';
+    status.classList.add('show', 'success');
+    form.reset();
+  });
+
+})();
+</script>
+
+</body>
+</html>
